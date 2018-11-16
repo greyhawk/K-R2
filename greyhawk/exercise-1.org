@@ -32,3 +32,91 @@
 #+RESULTS:
 | hello | worldc |
 
+** 练习1-3
+修改温度转换程序，使之能在转换表的顶部打印一个标题。
+#+BEGIN_SRC C
+  #include <stdio.h>
+
+  int main()
+  {
+    float fahr, celsius;
+    int lower, upper, step;
+
+    lower = 0;
+    upper = 300;
+    step = 20;
+
+    fahr = lower;
+    printf("%3s %6s\n", "fahr", "celsius");
+    printf("%3s %6s\n", "---", "------");
+    while(fahr <= upper) {
+      celsius = (5.0 / 9.0) * (fahr - 32.0);
+      printf("%3.0f %6.1f\n", fahr, celsius);
+      fahr = fahr + step;
+    }
+  }
+#+END_SRC
+
+#+RESULTS:
+| fahr | celsius |
+|  --- |  ------ |
+|    0 |   -17.8 |
+|   20 |    -6.7 |
+|   40 |     4.4 |
+|   60 |    15.6 |
+|   80 |    26.7 |
+|  100 |    37.8 |
+|  120 |    48.9 |
+|  140 |    60.0 |
+|  160 |    71.1 |
+|  180 |    82.2 |
+|  200 |    93.3 |
+|  220 |   104.4 |
+|  240 |   115.6 |
+|  260 |   126.7 |
+|  280 |   137.8 |
+|  300 |   148.9 |
+
+** 练习1-4
+编写一个程序打印摄氏温度转换为相应华氏温度的转换表
+#+BEGIN_SRC C
+  #include <stdio.h>
+
+  int main()
+  {
+    float fahr, celsius;
+    int lower, upper, step;
+
+    lower = 0;
+    upper = 100;
+    step = 10;
+
+    celsius = lower;
+    printf("%6s %3s\n", "celsius", "fahr");
+    printf("%6s %3s\n", "------", "---");
+    while(celsius <= upper) {
+      fahr = celsius * 9.0 / 5.0 + 32.0;
+      printf("%6.0f %3.0f\n", celsius, fahr);
+      celsius = celsius + step;
+    }
+  }
+
+#+END_SRC
+
+#+RESULTS:
+| celsius | fahr |
+|  ------ |  --- |
+|       0 |   32 |
+|      10 |   50 |
+|      20 |   68 |
+|      30 |   86 |
+|      40 |  104 |
+|      50 |  122 |
+|      60 |  140 |
+|      70 |  158 |
+|      80 |  176 |
+|      90 |  194 |
+|     100 |  212 |
+
+
+** 练习1-5
