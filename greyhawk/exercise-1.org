@@ -164,3 +164,19 @@
 |   40 |     4.4 |
 |   20 |    -6.7 |
 |    0 |   -17.8 |
+
+** 练习1-6
+验证表达式 getchar() != EOF 的值是0还是1。
+#+BEGIN_SRC C
+  #include <stdio.h>
+
+  int main()
+  {
+    int c;
+    c = (getchar() != EOF);
+    printf("%d", c);
+  }
+#+END_SRC
+
+#+RESULTS:
+: 0
