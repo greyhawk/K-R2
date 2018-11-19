@@ -180,3 +180,83 @@
 
 #+RESULTS:
 : 0
+
+** 练习1-7
+编写一个打印 EOF 值的程序
+#+BEGIN_SRC C
+  #include <stdio.h>
+
+  int main()
+  {
+    int c;
+    c = getchar();
+    printf("%d", c);
+  }
+
+#+END_SRC
+
+** 练习1-8
+编写一个统计空格、制表符与换行个数的程序。
+#+BEGIN_SRC C
+  #include <stdio.h>
+
+  int main()
+  {
+    long nc;
+    int c;
+
+    nc = 0;
+    while((c = getchar()) != EOF) {
+      if(c == '\n' || c == '\t' || c == ' ')
+        ++nc;
+    }
+    printf("%ld\n", nc);
+  }
+#+END_SRC
+
+** 练习1-9
+编写一个将输入复制到输出的程序，并将其中连续的多个空格用一个空格代替。
+#+BEGIN_SRC C
+  #include <stdio.h>
+
+  int main()
+  {
+    int c;
+    int nb;
+
+    nb = 0;
+
+    while((c = getchar()) != EOF) {
+      if (c == ' ')
+        ++nb;
+      else
+        nb = 0;
+      if (nb < 2)
+        putchar(c);
+    }
+  }
+
+#+END_SRC
+
+** 练习1-10
+编写一个将输入复制到输出的程序，并将其中的制表符替换为\t,把回退符号替换为\b, 把反斜杠替换为\\。这样也可以将制表符与回退符以可见的方式显示出来。
+#+BEGIN_SRC C
+#include <stdio.h>
+
+int main()
+{
+  int c;
+
+  while((c = getchar()) != EOF) {
+    if (c == '\t')
+      printf("\\t");
+    else if (c == '\b')
+      printf("\\b");
+    else if (c == '\\')
+      printf("\\\\");
+    else
+      putchar(c);
+  }
+}
+
+#+END_SRC
