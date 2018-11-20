@@ -260,3 +260,243 @@ int main()
 }
 
 #+END_SRC
+** 练习1-12
+编写一个程序，以每行一个单词的形式打印其输入
+#+BEGIN_SRC C
+#include <stdio.h>
+
+#define IN 0
+#define OUT 1
+
+int main()
+{
+  int c;
+  int state;
+
+  state = IN;
+  while((c = getchar()) != EOF) {
+    if (c == ' ')
+      state = OUT;
+    else
+      state = IN;
+    if (state == IN)
+      putchar(c);
+    else
+      printf("\n");
+  }
+}
+#+END_SRC
+
+#+RESULTS:
+** 练习1-13
+** 练习1-14
+** 练习1-15-1
+编写求幂函数
+#+BEGIN_SRC C
+  #include <stdio.h>
+
+  int power(int base, int n);
+
+  int power(int base, int n)
+  {
+    int i, p;
+
+    p = 1;
+    for(i = 0; i < n; i++)
+      p = p * base;
+    return p;
+  }
+
+  int main() {
+    int i;
+
+    for(i = 0; i < 10; i++)
+      printf("%d %d %d\n", i, power(2, i), power(-3, i));
+    return 0;
+  }
+#+END_SRC
+
+#+RESULTS:
+| 0 |   1 |      1 |
+| 1 |   2 |     -3 |
+| 2 |   4 |      9 |
+| 3 |   8 |    -27 |
+| 4 |  16 |     81 |
+| 5 |  32 |   -243 |
+| 6 |  64 |    729 |
+| 7 | 128 |  -2187 |
+| 8 | 256 |   6561 |
+| 9 | 512 | -19683 |
+
+** 练习1-15-2
+编写求幂函数
+#+BEGIN_SRC C
+  #include <stdio.h>
+
+  int power(int base, int n);
+  int power(int base, int n)
+  {
+    if (n == 0)
+      return 1;
+    return base * power(base, --n);
+  }
+
+  int main() {
+    int i;
+
+    for(i = 0; i < 10; i++)
+      printf("%d %d %d\n", i, power(2, i), power(-3, i));
+  }
+#+END_SRC
+
+#+RESULTS:
+| 0 |   1 |      1 |
+| 1 |   2 |     -3 |
+| 2 |   4 |      9 |
+| 3 |   8 |    -27 |
+| 4 |  16 |     81 |
+| 5 |  32 |   -243 |
+| 6 |  64 |    729 |
+| 7 | 128 |  -2187 |
+| 8 | 256 |   6561 |
+| 9 | 512 | -19683 |
+
+** 练习1-15-3
+重新编写1.2节中的温度转换程序，使用函数实现温度转换计算
+#+BEGIN_SRC C
+  #include <stdio.h>
+
+  float fahr_to_celsius(float f);
+  float fahr_to_celsius(float f)
+  {
+    return (5.0 / 9.0) * (f - 32.0);
+  }
+
+  int main()
+  {
+    float fahr, celsius;
+    int lower, upper, step;
+
+    lower = 0;
+    upper = 300;
+    step = 20;
+
+    fahr = lower;
+    printf("%3s %6s\n", "fahr", "celsius");
+    printf("%3s %6s\n", "---", "------");
+    while(fahr <= upper) {
+      celsius = fahr_to_celsius(fahr);
+      printf("%3.0f %6.1f\n", fahr, celsius);
+      fahr = fahr + step;
+    }
+  }
+#+END_SRC
+
+#+RESULTS:
+| fahr | celsius |
+|  --- |  ------ |
+|    0 |   -17.8 |
+|   20 |    -6.7 |
+|   40 |     4.4 |
+|   60 |    15.6 |
+|   80 |    26.7 |
+|  100 |    37.8 |
+|  120 |    48.9 |
+|  140 |    60.0 |
+|  160 |    71.1 |
+|  180 |    82.2 |
+|  200 |    93.3 |
+|  220 |   104.4 |
+|  240 |   115.6 |
+|  260 |   126.7 |
+|  280 |   137.8 |
+|  300 |   148.9 |
+
+** 练习1-16
+修改打印最长文本行的程序的主程序main，使之可以打印任意长度的输入行的长度，并尽可能多地打印文本
+#+BEGIN_SRC C
+#include <stdio.h>
+#define MAXLINE 1000
+
+int getliner(char line[], int maxline);
+void copy(char to[], char from[]);
+
+int main()
+{
+  int len;
+  int max;
+  char line[MAXLINE];
+  char longest[MAXLINE];
+
+  max = 0;
+  while((len = getliner(line, MAXLINE)) > 0)
+    if (len > max) {
+      max = len;
+      copy(longest, line);
+    }
+  if (max > 0) {
+    printf("%s", longest);
+  }
+}
+
+int getliner(char s[], int n)
+{
+  int c, i;
+
+  for(i=0; i<n-1 && (c = getchar()) != EOF && c != '\n'; i++)
+    s[i] = c;
+  if(c == '\n') {
+    s[i] = c;
+    ++i;
+  }
+  s[i] = '\0';
+  return i;
+}
+
+void copy(char to[], char from[])
+{
+  int i;
+
+  i = 0;
+  while((to[i] = from[i]) != '\0')
+    ++i;
+
+}
+
+
+#+END_SRC
+** 练习1-17
+编写一个程序，打印长度大于80个字符的所有输入行。
+#+BEGIN_SRC C
+  #include <stdio.h>
+
+  #define MINSIZE 80
+  #define MAXLINE 1000
+
+  int getliner(char line[], int maxline);
+
+  int main()
+  {
+    int len;
+    char line[MAXLINE];
+
+    while((len = getliner(line, MAXLINE)) > 0) {
+      if (len > 80)
+        printf("%s", line);
+    }
+  }
+
+  int getliner(char s[], int n)
+  {
+    int c, i;
+
+    for (i=0; i<n-1 && (c = getchar()) != EOF && c!= '\n'; ++i)
+      s[i] = c;
+    if (c == '\n') {
+      s[i] = c;
+      i++;
+    }
+    s[i] = '\0';
+    return i;
+  }
+#+END_SRC
