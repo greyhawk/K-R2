@@ -118,7 +118,6 @@
 |      90 |  194 |
 |     100 |  212 |
 
-
 ** 练习1-5
 修改温度转换程序，要求以逆序打印温度转换表
 
@@ -415,53 +414,53 @@ int main()
 ** 练习1-16
 修改打印最长文本行的程序的主程序main，使之可以打印任意长度的输入行的长度，并尽可能多地打印文本
 #+BEGIN_SRC C
-#include <stdio.h>
-#define MAXLINE 1000
+  #include <stdio.h>
+  #define MAXLINE 1000
 
-int getliner(char line[], int maxline);
-void copy(char to[], char from[]);
+  int getliner(char line[], int maxline);
+  void copy(char to[], char from[]);
 
-int main()
-{
-  int len;
-  int max;
-  char line[MAXLINE];
-  char longest[MAXLINE];
+  int main()
+  {
+    int len;
+    int max;
+    char line[MAXLINE];
+    char longest[MAXLINE];
 
-  max = 0;
-  while((len = getliner(line, MAXLINE)) > 0)
-    if (len > max) {
-      max = len;
-      copy(longest, line);
+    max = 0;
+    while((len = getliner(line, MAXLINE)) > 0)
+      if (len > max) {
+        max = len;
+        copy(longest, line);
+      }
+    if (max > 0) {
+      printf("%s", longest);
     }
-  if (max > 0) {
-    printf("%s", longest);
   }
-}
 
-int getliner(char s[], int n)
-{
-  int c, i;
+  int getliner(char s[], int n)
+  {
+    int c, i;
 
-  for(i=0; i<n-1 && (c = getchar()) != EOF && c != '\n'; i++)
-    s[i] = c;
-  if(c == '\n') {
-    s[i] = c;
-    ++i;
+    for(i=0; i<n-1 && (c = getchar()) != EOF && c != '\n'; i++)
+      s[i] = c;
+    if(c == '\n') {
+      s[i] = c;
+      ++i;
+    }
+    s[i] = '\0';
+    return i;
   }
-  s[i] = '\0';
-  return i;
-}
 
-void copy(char to[], char from[])
-{
-  int i;
+  void copy(char to[], char from[])
+  {
+    int i;
 
-  i = 0;
-  while((to[i] = from[i]) != '\0')
-    ++i;
+    i = 0;
+    while((to[i] = from[i]) != '\0')
+      ++i;
 
-}
+  }
 
 
 #+END_SRC
