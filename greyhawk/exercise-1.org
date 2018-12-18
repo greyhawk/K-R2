@@ -499,3 +499,97 @@ int main()
     return i;
   }
 #+END_SRC
+** 练习1-18
+编写一个程序，删除每个输入行末尾的空格及制表符，并删除完全是空格的行。
+#+BEGIN_SRC C
+  #include <stdio.h>
+
+  #define MAXLINE 1000
+
+  int getliner(char line[], int maxline);
+  int trim(char line[], int length);
+
+  int main()
+  {
+    int len;
+    char line[MAXLINE];
+
+    while((len = getliner(line, MAXLINE)) > 0) {
+      int l;
+      l = trim(line, len);
+      printf("%d: %s", l, line);
+    }
+  }
+
+  int getliner(char s[], int n)
+  {
+    int c, i;
+
+    for (i=0; i<n-1 && (c = getchar()) != EOF && c!='\n'; ++i)
+      s[i] = c;
+    if (c == '\n') {
+      s[i] = c;
+      i++;
+    }
+    s[i] = '\0';
+    return i + 1;
+  }
+
+  int trim(char s[], int l)
+  {
+    int c;
+    c = s[l - 3];
+    if (c == ' ' || c == '\t') {
+      s[l - 3] = s[l - 2];
+      s[l - 2] = s[l - 1];
+      return trim(s, l - 1);
+    }
+    else {
+      return l;
+    }
+  }
+#+END_SRC
+** 练习1-19
+编写函数reverse(s), 将字符串s中的字符顺序颠倒过来。使用该函数编写一个程序，每次颠倒一个输入行中的字符顺序
+#+BEGIN_SRC C
+  #include <stdio.h>
+
+  #define MAXLINE 1000
+
+  int getliner(char[], int);
+
+  int getliner(char line[], int maxline)
+  {
+    int c, i;
+    for (i=0; i<maxline-1 && (c = getchar()) != EOF && c!='\n'; ++i)
+      line[i] = c;
+    if(c == '\n') {
+      line[i] = c;
+      i++;
+    }
+    line[i] = '\0';
+    return i + 1;
+  }
+
+  void reverse(char[], char[], int);
+  void reverse(char s[], char d[], int l)
+  {
+    int i;
+    for(i=0; i < l - 2; i++)
+      d[l-i-3] = s[i];
+    d[l-2] = '\n';
+    d[l-1] = '\0';
+  }
+
+  int main()
+  {
+    int l;
+    char line[MAXLINE];
+
+    while((l = getliner(line, MAXLINE)) > 0) {
+      char d[l];
+      reverse(line, d, l);
+      printf("%s", d);
+    }
+  }
+#+END_SRC
